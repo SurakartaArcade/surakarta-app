@@ -1,0 +1,53 @@
+{
+  "name": "com.zexfer.surakarta",
+  "displayName": "Surakarta",
+  "version": "1.0.0",
+  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack; cordova prepare;",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ecosystem:cordova"
+  ],
+  "author": "Apache Cordova Team",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@pixi/filter-drop-shadow": "^3.0.3",
+    "cordova-android": "^8.1.0",
+    "cordova-ios": "^5.1.1",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-webpack": "^0.4.7",
+    "pixi-tween": "^0.2.0",
+    "pixi.js": "^5.2.0",
+    "surakarta": "^1.0.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/preset-env": "^7.7.7",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "cordova-plugin-whitelist": "^1.3.4",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
+  },
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-webpack": {},
+      "cordova-plugin-console": {}
+    },
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  }
+}
