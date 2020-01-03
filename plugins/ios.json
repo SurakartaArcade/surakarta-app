@@ -12,6 +12,9 @@
     },
     "cordova-plugin-webpack": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "com.zexfer.surakarta.plugins.gameconfig": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {}

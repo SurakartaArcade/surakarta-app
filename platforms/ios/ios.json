@@ -12,12 +12,25 @@
     },
     "cordova-plugin-webpack": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "com.zexfer.surakarta.plugins.gameconfig": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {},
-  "modules": [],
+  "modules": [
+    {
+      "id": "com.zexfer.surakarta.plugins.gameconfig.GameConfig",
+      "file": "plugins/com.zexfer.surakarta.plugins.gameconfig/www/GameConfig.js",
+      "pluginId": "com.zexfer.surakarta.plugins.gameconfig",
+      "clobbers": [
+        "cordova.plugins.GameConfig"
+      ]
+    }
+  ],
   "plugin_metadata": {
     "cordova-plugin-whitelist": "1.3.4",
-    "cordova-plugin-webpack": "0.4.7"
+    "cordova-plugin-webpack": "0.4.7",
+    "com.zexfer.surakarta.plugins.gameconfig": "1.0.0"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "name": "GameConfig",
+  "version": "1.0.0",
+  "description": "Data-provider plugin for Surakarta game configurations.",
+  "cordova": {
+    "id": "com.zexfer.surakarta.plugins.gameconfig",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SurakartaArcade/surakarta-app.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Shukant K. Pal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SurakartaArcade/surakarta-app/issues"
+  },
+  "homepage": "https://github.com/SurakartaArcade/surakarta-app#readme"
+}

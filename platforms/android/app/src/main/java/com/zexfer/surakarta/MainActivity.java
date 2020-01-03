@@ -20,13 +20,14 @@
 package com.zexfer.surakarta;
 
 import android.os.Bundle;
-import org.apache.cordova.*;
 
-public class MainActivity extends CordovaActivity
-{
+import com.zexfer.surakarta.plugins.gameconfig.GameConfig;
+
+import org.apache.cordova.CordovaActivity;
+
+public class MainActivity extends CordovaActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // enable Cordova apps to be started in the background
@@ -34,6 +35,9 @@ public class MainActivity extends CordovaActivity
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
             moveTaskToBack(true);
         }
+
+        GameConfig.setRedPlayer(GameConfig.PLAYER_LOCAL);
+        GameConfig.setBlackPlayer(GameConfig.PLAYER_LOCAL);
 
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);

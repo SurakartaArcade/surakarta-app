@@ -22,5 +22,13 @@
     },
     "is_top_level": true,
     "variables": {}
+  },
+  "com.zexfer.surakarta.plugins.gameconfig": {
+    "source": {
+      "type": "local",
+      "path": "/Users/shukantpal/CordovaProjects/Surakarta/node_modules/GameConfig"
+    },
+    "is_top_level": true,
+    "variables": {}
   }
 }

@@ -15,12 +15,13 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@pixi/filter-drop-shadow": "^3.0.3",
+    "GameConfig": "file:true/GameConfig",
     "cordova-android": "^8.1.0",
     "cordova-ios": "^5.1.1",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-webpack": "^0.4.7",
     "pixi-tween": "^0.2.0",
-    "pixi.js": "^5.2.0",
+    "pixi.js": "5.2.0",
     "surakarta": "^1.0.3"
   },
   "devDependencies": {
@@ -43,7 +44,8 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-webpack": {},
-      "cordova-plugin-console": {}
+      "cordova-plugin-console": {},
+      "com.zexfer.surakarta.plugins.gameconfig": {}
     },
     "platforms": [
       "ios",

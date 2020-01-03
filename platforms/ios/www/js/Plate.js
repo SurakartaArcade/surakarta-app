@@ -17,12 +17,15 @@ class PebbleDnD {
     onGrab = (event) => {
         this.activePebble = event.target
         this.startPosition = [...this.activePebble.platePosition]
+        this.startCoords = this.activePebble.position.clone()
         this.currentCoords = [this.activePebble.x, this.activePebble.y]
     }
 
     onTranslate = (event) => {
         const pos = event.data.getLocalPosition(this.plate)
         this.currentCoords = [pos.x, pos.y]
+        this.activePebble.position.x = pos.x - this.plate.pebbleDimens[0] * 0.5
+        this.activePebble.position.y = pos.y - this.plate.pebbleDimens[1] * 0.5
     }
 
     onRelease = (event) => {
@@ -31,11 +34,16 @@ class PebbleDnD {
             return
         }
 
+        this.activePebble.position = this.startCoords
         const endPosition = this.plate.nearestPlatePositionFor(...this.currentCoords)
 
         // Notify
-        this.plate.onDnDInput(this.startPosition, endPosition, this.activePebble)
+        const isRed = this.activePebble.texture === this.plate.redPebbleTex
+        if ((isRed && this.plate.redInput) || (!isRed && this.plate.blackInput)) {
+            this.plate.onDnDInput(this.startPosition, endPosition, this.activePebble)
+        }
         // Cleanup
+        this.startCoords = null
         this.startPosition = null
         this.activePebble = null
         this.currentCoords = null
@@ -58,11 +66,18 @@ class PebbleDnD {
  * Manages the UI state of a Surkarta board.
  */
 export class Plate extends VectorSprite {
-    constructor (redPebbleTex, blackPebbleTex, callback) {
+    constructor (callback, redInput = false, blackInput = false) {
         super('img/Board.svg')
         this.dnd = new PebbleDnD(this)
         this.userCallback = callback
-        this.usePebbleTextures(redPebbleTex, blackPebbleTex)
+
+        this._redInput = redInput
+        this._blackInput = blackInput
+    }
+
+    useInputs (red, black) {
+        this._redInput = red
+        this._blackInput = black
     }
 
     usePebbleTextures (red, black) {
@@ -148,6 +163,30 @@ export class Plate extends VectorSprite {
         this.useState(this.state, true, true)
     }
 
+    /**
+     * Whether red pebbles can be moved by the user.
+     * @member {boolean}
+     */
+    get redInput () {
+        return this._redInput
+    }
+
+    /**
+     * Whether black pebbles can be moved by the user.
+     * @member {boolean}
+     */
+    get blackInput () {
+        return this._blackInput
+    }
+
+    get cellWidth () {
+        return this.width * (1 - 2 * PLATE_PADDING) / 9
+    }
+
+    get cellHeight () {
+        return this.height * (1 - 2 * PLATE_PADDING) / 9
+    }
+
     nearestPlatePositionFor (x, y) {
         const padX = PLATE_PADDING * this.width
         const padY = PLATE_PADDING * this.height
@@ -164,6 +203,18 @@ export class Plate extends VectorSprite {
         const cellY = (this.height - 2 * padY) / 9
         return [padX + (c + 2) * cellX - this.pebbleDimens[0] * 0.5,
             padY + (r + 2) * cellY - this.pebbleDimens[1] * 0.5]
+    }
+
+    findPebbleAt (r, c) {
+        for (let i = 0; i < this.children.length; i++) {
+            const child = this.children[i]
+
+            if (child.platePosition[0] === r && child.platePosition[1] === c) {
+                return child
+            }
+        }
+
+        return null
     }
 
     onDnDInput (startPosition, endPosition, activePebble) {

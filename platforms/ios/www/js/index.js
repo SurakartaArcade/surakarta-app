@@ -1,6 +1,5 @@
 const PIXI = require('pixi.js')
 window.PIXI = PIXI
-
 const { SurakartaPixi } = require('./SurakartaPixi')
 
 window.onload = function () {
