@@ -38,6 +38,10 @@ public class GameConfig extends CordovaPlugin {
      */
     public static final int PLAYER_NOINPUT = 4;
 
+    public static final int MODE_OFFLINE = 1001;
+
+    public static final int MODE_ONLINE = 1002;
+
     private static int sRedPlayer = PLAYER_NOINPUT;
     private static int sBlackPlayer = PLAYER_NOINPUT;
     private static int[] sPreplaySequence = new int[0];
@@ -66,8 +70,8 @@ public class GameConfig extends CordovaPlugin {
         return sBlackPlayer;
     }
 
-    public static int setBlackPlayer(int blackPlayer) {
-        return sBlackPlayer;
+    public static void setBlackPlayer(int blackPlayer) {
+        sBlackPlayer = blackPlayer;
     }
 
     /**

@@ -1,0 +1,86 @@
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorError">@android:color/holo_red_light</item>
+
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="colorOnBackground">@color/colorDivider</item>
+    </style>
+
+    <style name="AppTheme.ToolbarText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="AppTheme.TextCorrector">
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/colorPrimaryLight</item>
+    </style>
+
+    <style name="PlayerSourceToggle2">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:layout_margin">48dp</item>
+        <item name="android:background">@drawable/player_toggle</item>
+    </style>
+
+    <style name="PlayerSourceToggle">
+        <item name="android:layout_width">96dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:layout_margin">48dp</item>
+        <item name="android:background">@drawable/player_toggle</item>
+    </style>
+
+    <!-- List entry styles -->
+
+    <style name="ListEntry" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">@dimen/iconLarge</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:foreground">?selectableItemBackground</item>
+    </style>
+
+    <style name="ListEntry.Icon" parent="AppTheme">
+        <item name="android:layout_width">@dimen/iconLarge</item>
+        <item name="android:layout_height">@dimen/iconLarge</item>
+        <item name="android:layout_marginRight">8dp</item>
+    </style>
+
+    <style name="ListEntry.Divider" parent="AppTheme">
+        <item name="android:layout_width">@dimen/dividerThickness</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+
+    <style name="ListEntry.SingleLineText" parent="AppTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+</resources>

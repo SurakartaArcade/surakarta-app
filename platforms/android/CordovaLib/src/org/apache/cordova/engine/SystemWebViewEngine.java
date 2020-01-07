@@ -49,7 +49,7 @@ import java.lang.reflect.Method;
 
 
 /**
- * Glue class between CordovaWebView (main Cordova logic) and SystemWebView (the actual View).
+ * Glue class between CordovaWebView (activity_main Cordova logic) and SystemWebView (the actual View).
  * We make the Engine separate from the actual View so that:
  *  A) We don't need to worry about WebView methods clashing with CordovaWebViewEngine methods
  *     (e.g.: goBack() is void for WebView, and boolean for CordovaWebViewEngine)

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="16dp"
+        tools:context=".dialogs.PlayerSourceDialogFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout android:id="@+id/entry_local"
+                style="@style/ListEntry">
+
+                <ImageView style="@style/ListEntry.Icon"
+                    android:src="@drawable/ic_person" />
+
+                <View style="@style/ListEntry.Divider" />
+
+                <TextView style="@style/ListEntry.SingleLineText"
+                    android:text="Player on this device" />
+            </LinearLayout>
+
+            <LinearLayout android:id="@+id/entry_computer"
+                style="@style/ListEntry">
+
+                <ImageView style="@style/ListEntry.Icon"
+                    android:src="@drawable/ic_cpu" />
+
+                <View style="@style/ListEntry.Divider" />
+
+                <TextView style="@style/ListEntry.SingleLineText"
+                    android:text="Computer player" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

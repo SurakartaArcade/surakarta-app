@@ -26,6 +26,8 @@ class PebbleDnD {
         this.currentCoords = [pos.x, pos.y]
         this.activePebble.position.x = pos.x - this.plate.pebbleDimens[0] * 0.5
         this.activePebble.position.y = pos.y - this.plate.pebbleDimens[1] * 0.5
+
+        this.plate.indicateRenderOnce()
     }
 
     onRelease = (event) => {
@@ -47,6 +49,8 @@ class PebbleDnD {
         this.startPosition = null
         this.activePebble = null
         this.currentCoords = null
+
+        this.plate.indicateRenderOnce()
     }
 
     registerPebble (pebble) {
@@ -70,6 +74,7 @@ export class Plate extends VectorSprite {
         super('img/Board.svg')
         this.dnd = new PebbleDnD(this)
         this.userCallback = callback
+        // this.renderCallback =
 
         this._redInput = redInput
         this._blackInput = blackInput

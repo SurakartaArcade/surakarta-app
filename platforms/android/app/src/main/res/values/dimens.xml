@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="iconLarge">48dp</dimen>
+    <dimen name="textLarge">32dp</dimen>
+    <dimen name="textMedium">16dp</dimen>
+    <dimen name="textSmall">12dp</dimen>
+
+    <dimen name="dividerThickness">1dp</dimen>
+</resources>

@@ -133,7 +133,7 @@ public class PluginManager {
             long duration = System.currentTimeMillis() - pluginStartTime;
 
             if (duration > SLOW_EXEC_WARNING_THRESHOLD) {
-                LOG.w(TAG, "THREAD WARNING: exec() call to " + service + "." + action + " blocked the main thread for " + duration + "ms. Plugin should use CordovaInterface.getThreadPool().");
+                LOG.w(TAG, "THREAD WARNING: exec() call to " + service + "." + action + " blocked the activity_main thread for " + duration + "ms. Plugin should use CordovaInterface.getThreadPool().");
             }
             if (!wasValidAction) {
                 PluginResult cr = new PluginResult(PluginResult.Status.INVALID_ACTION);

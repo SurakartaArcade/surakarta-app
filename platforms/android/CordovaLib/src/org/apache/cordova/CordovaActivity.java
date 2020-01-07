@@ -44,7 +44,7 @@ import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 
 /**
- * This class is the main Android activity that represents the Cordova
+ * This class is the activity_main Android activity that represents the Cordova
  * application. It should be extended by the user to load the specific
  * html file that contains the application.
  *
@@ -239,7 +239,7 @@ public class CordovaActivity extends Activity {
         LOG.d(TAG, "Paused the activity.");
 
         if (this.appView != null) {
-            // CB-9382 If there is an activity that started for result and main activity is waiting for callback
+            // CB-9382 If there is an activity that started for result and activity_main activity is waiting for callback
             // result, we shoudn't stop WebView Javascript timers, as activity for result might be using them
             boolean keepRunning = this.keepRunning || this.cordovaInterface.activityResultCallback != null;
             this.appView.handlePause(keepRunning);
@@ -362,7 +362,7 @@ public class CordovaActivity extends Activity {
     }
 
     /**
-     * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
+     * Report an error to the host application. These errors are unrecoverable (i.e. the activity_main resource is unavailable).
      * The errorCode parameter corresponds to one of the ERROR_* constants.
      *
      * @param errorCode   The error code corresponding to an ERROR_* value.

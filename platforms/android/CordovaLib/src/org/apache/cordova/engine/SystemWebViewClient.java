@@ -130,8 +130,8 @@ public class SystemWebViewClient extends WebViewClient {
 
     /**
      * Notify the host application that a page has started loading.
-     * This method is called once for each main frame load so a page with iframes or framesets will call onPageStarted
-     * one time for the main frame. This also means that onPageStarted will not be called when the contents of an
+     * This method is called once for each activity_main frame load so a page with iframes or framesets will call onPageStarted
+     * one time for the activity_main frame. This also means that onPageStarted will not be called when the contents of an
      * embedded frame changes, i.e. clicking a link whose target is an iframe.
      *
      * @param view          The webview initiating the callback.
@@ -148,7 +148,7 @@ public class SystemWebViewClient extends WebViewClient {
 
     /**
      * Notify the host application that a page has finished loading.
-     * This method is called only for main frame. When onPageFinished() is called, the rendering picture may not be updated yet.
+     * This method is called only for activity_main frame. When onPageFinished() is called, the rendering picture may not be updated yet.
      *
      *
      * @param view          The webview initiating the callback.
@@ -178,7 +178,7 @@ public class SystemWebViewClient extends WebViewClient {
     }
 
     /**
-     * Report an error to the host application. These errors are unrecoverable (i.e. the main resource is unavailable).
+     * Report an error to the host application. These errors are unrecoverable (i.e. the activity_main resource is unavailable).
      * The errorCode parameter corresponds to one of the ERROR_* constants.
      *
      * @param view          The WebView that is initiating the callback.

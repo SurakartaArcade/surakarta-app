@@ -3,4 +3,13 @@
     <string name="app_name">Surakarta</string>
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
+    <string name="title_activity_dashboard">Surakarta Dashboard</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="action_play">Play</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="description_play">Start playing Surakarta</string>
+    <string name="title_pick">Pick Player</string>
+    <string name="action_pick">Pick</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

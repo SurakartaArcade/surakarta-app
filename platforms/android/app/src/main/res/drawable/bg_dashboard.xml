@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:startColor="@color/colorAccent"
+                android:centerColor="@color/colorPrimaryLight"
+                android:endColor="@color/colorPrimaryDark"
+                android:angle="135" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/ic_board_wood"
+        android:gravity="right|top"
+        android:right="-256dp"
+        android:top="-246dp" />
+    <item android:drawable="@drawable/ic_board_wood"
+        android:gravity="bottom|left"
+        android:bottom="-150dp"
+        android:left="-350dp" />
+</layer-list>

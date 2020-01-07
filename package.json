@@ -11,6 +11,7 @@
   "keywords": [
     "ecosystem:cordova"
   ],
+  "private": "true",
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
