@@ -13,4 +13,7 @@ The Surakarta game, Firebase communication & matchmaking, and computer moves are
 * `GameConfig`: This plugin is used to send initialization parameters to `SurkarataPixi` that define who is playing & what is being played (e.g. any sequence of moves to play beforehand).
 
 ## Preview
-<img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
+<p>
+  <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
+  <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
+</p>
