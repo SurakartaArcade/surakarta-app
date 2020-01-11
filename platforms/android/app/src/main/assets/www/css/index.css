@@ -1,21 +1,29 @@
 html {
-    margin: 0px;
-    padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin-left: 0px;
-    width: 100%;
-    height: 100%;
-    padding: 0px;
-    position: absolute;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  position: absolute;
+}
+
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #view-target {
-    margin: 0px;
-    padding: 0px;
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
 }
 
 image {
-    image-rendering: pixelated;
+  image-rendering: pixelated;
 }

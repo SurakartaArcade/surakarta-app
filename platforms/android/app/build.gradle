@@ -279,6 +279,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: '*.jar')
     // SUB-PROJECT DEPENDENCIES START
     implementation(project(path: ":CordovaLib"))
+    implementation "com.android.support:support-annotations:27.+"
     // SUB-PROJECT DEPENDENCIES END
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
