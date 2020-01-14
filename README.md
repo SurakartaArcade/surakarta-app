@@ -32,4 +32,5 @@ The bridge contains a list of event-stores, or just events, that hold event-asso
 <p>
   <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
   <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
+  <img src="https://i.ibb.co/4PR0SN9/Screenshot-1578971224.png" width="256" />
 </p>
