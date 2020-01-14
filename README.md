@@ -12,6 +12,24 @@ The Surakarta game, Firebase communication & matchmaking, and computer moves are
 
 * `GameConfig`: This plugin is used to send initialization parameters to `SurkarataPixi` that define who is playing & what is being played (e.g. any sequence of moves to play beforehand).
 
+### Layers
+
+There are three layers in this project :-
+
+* gl-app: This is the PixiJS application that handles everything in the WebGL canvas and wraps around the underlying `Surakarta` instance.
+
+* ui: This is a React application that handles the layout of the surrounding UI and reacts to events fired by gl-app (or `SurakartaPixi`). It also manages the ticking down of timers.
+
+* bridge: This is a event firing object that both gl-app & the ui use for bilateral communication. It is initialized at `window.$bridge`, i.e. is globally available.
+
+## Bridge Events
+
+The bridge contains a list of event-stores, or just events, that hold event-associated data. This data is updated whenever an event is fired; however, the data can still be referenced after firing!
+
+> Functions that listen to bridge events are called bridge-binders and are annotated so in documentation. They are different from functions that listen to turns in `Surakarta` (called responders) and functions that listen to events emitted by `Surakarta`.
+
+The following are 
+
 ## Preview
 <p>
   <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
