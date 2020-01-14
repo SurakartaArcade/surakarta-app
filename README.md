@@ -28,8 +28,6 @@ The bridge contains a list of event-stores, or just events, that hold event-asso
 
 > Functions that listen to bridge events are called bridge-binders and are annotated so in documentation. They are different from functions that listen to turns in `Surakarta` (called responders) and functions that listen to events emitted by `Surakarta`.
 
-The following are 
-
 ## Preview
 <p>
   <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
