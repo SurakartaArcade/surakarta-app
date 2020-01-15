@@ -6,11 +6,11 @@ const Portrait = require('./ui/index.portrait.js')
 
 function buildBridge () {
     /**
-     * @global window.$bridge
-     * @type {UIBridge}
-     *
      * Bridge used to communicate requirements between the gl-app module
      * and the React UI.
+     *
+     * @global window.$bridge
+     * @type {UIBridge}
      */
     window.$bridge = new UIBridge()
         /* Fired when it is a player's turn. @see TurnEvent */

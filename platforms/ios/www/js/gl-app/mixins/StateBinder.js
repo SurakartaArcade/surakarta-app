@@ -38,7 +38,7 @@ const Binder = {
             return
         }
         if (name === 'normal' || this.state.activeBinder !== 'normal') {
-            this.normalState()
+            this.normalState(true) // go to normal even if owner-binder not normal
         }
 
         console.log(`Use state manager: ${name}, replacing ${this.state.activeBinder}`)
@@ -47,7 +47,12 @@ const Binder = {
         name += 'Binder'
         this.state[name].onBindState(...params)
     },
-    normalState: function () {
+    normalState: function (forceNormal = false) {
+        if (!forceNormal && this.state.ownerBinder && this.state.ownerBinder !== 'normal') {
+            this.useState(this.state.ownerBinder)
+            return
+        }
+
         if (this.state.activeBinder === 'normal') {
             return
         }

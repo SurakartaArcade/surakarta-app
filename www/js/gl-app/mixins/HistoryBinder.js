@@ -28,10 +28,10 @@ const Binder = {
             }
         }.bind(target))
         window.$bridge.registerListener('moveforward', function () {
-            if (this.state.historyBinder.page) {
+            if (this.state.historyBinder.page !== null) {
                 this.state.historyBinder.moveTo(this.state.historyBinder.page + 1)
             } else {
-                this.useState('history')
+                this.normalState()
             }
         }.bind(target))
     },
@@ -44,14 +44,17 @@ const Binder = {
         this.state.historyBinder.page = null
     },
     moveTo: function (move = this.state.history.length - 1) {
-        if (Number.isNaN(move)) { // occurs when moveback, moveforward invoked first time
+        if (Number.isNaN(move) // occurs when moveback, moveforward invoked first time
+        ) {
             move = this.state.history.length - 1
         }
 
         move = Math.max(0, move)
+        console.log('moveTo: ' + move)
         this.state.historyBinder.page = move
 
         if (move >= this.state.history.length) {
+            this.state.historyBinder.page = this.state.history.length - 1 // in case owner-binder = 'history'
             this.normalState()
         } else {
             this.plate.useDisplayOnlyState(this.state.history[move], false) // no auto-update

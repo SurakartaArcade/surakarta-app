@@ -7,13 +7,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.zexfer.surakarta.database.entities.SurakartaTrack;
 import com.zexfer.surakarta.databinding.ActivityMainBinding;
 import com.zexfer.surakarta.dialogs.PlayerSourceDialogFragment;
 import com.zexfer.surakarta.gui.OfflineConfigChooserFragment;
@@ -24,7 +27,8 @@ import com.zexfer.surakarta.viewmodels.GameConfigViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener,
-        PlayerSourceDialogFragment.PlayerSourceListener {
+        PlayerSourceDialogFragment.PlayerSourceListener,
+        HistoryAdapter.HistoryTrackActionListener {
 
     private static final int NUM_CONFIGS = 2;
 
@@ -44,6 +48,9 @@ public class MainActivity extends AppCompatActivity
         mViewBinding.appbar.appbarViewpager.setAdapter(mConfigSlideAdapter);
         mViewBinding.appbar.appbarViewpager.setUserInputEnabled(false);
         mViewBinding.historyView.setAdapter(new HistoryAdapter(getLayoutInflater()));
+        mViewBinding.historyView.addItemDecoration(
+                new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
+        );
         mViewBinding.playButton.setOnClickListener(this);
 
         mGameConfig = ViewModelProviders.of(this).get(GameConfigViewModel.class);
@@ -122,6 +129,24 @@ public class MainActivity extends AppCompatActivity
                 break;
             case PlayerSource.COMPUTER:
                 sourceView.setImageResource(R.drawable.ic_cpu_colored);
+                break;
+        }
+    }
+
+    @Override
+    public void onTrackActionSelected(SurakartaTrack track, int actionStringRes) {
+        switch(actionStringRes) {
+            case R.string.action_review:
+                GameConfig.putBundle(track.encodedBundle);
+                Intent playIntent = new Intent(this, SurakartaActivity.class);
+                startActivity(playIntent);
+                break;
+            case R.string.action_analyze:
+                new AlertDialog.Builder(this)
+                        .setTitle(R.string.title_analyze_404)
+                        .setMessage(R.string.desc_analyze_404)
+                        .setNeutralButton("Okay", null)
+                        .show();
                 break;
         }
     }

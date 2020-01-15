@@ -114,7 +114,7 @@ export class BHalf extends React.Component {
         this.stopTimer()
         this.setState({
             popoverOpen: true,
-            popoverTitle: `${data.winnerName} won ${data.reason}!`,
+            popoverTitle: data.winner ? `${data.winnerName} won ${data.reason}!` : '',
             popoverOptions: [
                 'New Game',
                 'Analyze',

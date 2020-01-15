@@ -10,8 +10,13 @@
     <string name="action_cancel">Cancel</string>
     <string name="description_play">Start playing Surakarta</string>
     <string name="title_pick">Pick Player</string>
-    <string name="action_pick">Pick</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="game_local">Saved game played on this device</string>
     <string name="game_online">Played online</string>
+    <string name="title_analyze_404">Error 404</string>
+    <string name="desc_analyze_404">Analysis is not yet implemented! Support this project
+        by donating for development. </string>
+    <string name="action_analyze">Analyze</string>
+    <string name="action_pick">Pick</string>
+    <string name="action_review">Review</string>
 </resources>

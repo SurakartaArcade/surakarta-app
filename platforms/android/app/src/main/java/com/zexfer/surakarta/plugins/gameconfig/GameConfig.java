@@ -46,6 +46,7 @@ public class GameConfig extends CordovaPlugin {
     private static int sBlackPlayer = PLAYER_NOINPUT;
     private static int[] sPreplaySequence = new int[0];
     private static int sMode = MODE_OFFLINE;
+    private static String sBundle = null;
 
     private static PlatformProvider sProvider;
 
@@ -99,6 +100,11 @@ public class GameConfig extends CordovaPlugin {
         sMode = mode;
     }
 
+    /* Bundle is deleted after JS fetches it. */
+    public static void putBundle(String bundle) {
+        sBundle = bundle;
+    }
+
     public static void provide(PlatformProvider provider) {
         Log.i("GameConfig", "Platform provider given!");
         sProvider = provider;
@@ -112,6 +118,9 @@ public class GameConfig extends CordovaPlugin {
                 encodedResult.put("redPlayer", sRedPlayer);
                 encodedResult.put("blackPlayer", sBlackPlayer);
                 encodedResult.put("preplaySequence", new JSONArray(sPreplaySequence));
+                encodedResult.put("bundle", sBundle);
+
+                sBundle = null;// auto-delete
 
                 callbackContext.sendPluginResult(new PluginResult(
                         PluginResult.Status.OK,

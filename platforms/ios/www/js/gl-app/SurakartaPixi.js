@@ -82,6 +82,24 @@ export class SurakartaPixi {
         }
         this.onReset(true)
 
+        if (event.bundle) {
+            this.config.bundle = event.bundle
+            this.state.ownerBinder = 'history'
+
+            const expandedBundle = SurakartaBundler.unbundle(this.config.bundle)
+            const history = expandedBundle
+
+            for (let i = 0; i < history.length; i++) {
+                history[i] = Surakarta.fromState(history[i])
+            }
+
+            // override game!
+            this.state.history = history
+            // No respondering since it is past game
+
+            this.config.isLocal = false
+        }
+
         this.stage.interactive = true
         this.stage.on('mousedown', this.normalState)
         this.stage.on('touchstart', this.normalState)
@@ -93,17 +111,17 @@ export class SurakartaPixi {
     }
 
     onReady = () => {
-        if (this.config.isLocal) {
+        if (window.$bridge.gameRunning) {
             this.state.player = 'red'
-
-            window.$bridge.gameRunning = true
 
             window.$bridge.registerListener('timerout', this.onTimerOut)
             window.$bridge.registerListener('resign', this.onResign)
             window.$bridge.registerListener('gamestart', this.onReset)
 
-            window.$bridge.fire('timersync', { player: undefined, value: 60000 * 5 })
-            window.$bridge.fire('turn', { player: 'red' })
+            if (this.config.isLocal) {
+                window.$bridge.fire('timersync', { player: undefined, value: 60000 * 5 })
+                window.$bridge.fire('turn', { player: 'red' })
+            }
         }
 
         this._measureLayout()
@@ -116,18 +134,23 @@ export class SurakartaPixi {
         this.ticker.add((delta) => {
             PIXI.tweenManager.update()
         })
+
+        this.normalState() // if owner-binder !== 'normal'
     }
 
     /**
      * @bridge-binder
      */
     onReset = (noFireEvents) => {
+        this.config.bundle = undefined
+
         this.state = {
             current: new Surakarta(),
             currentCopy: new Surakarta(), // just for initial position in history
             history: [new Surakarta()],
             player: null, // set 'red' in onReady
-            activeBinder: 'normal' // | 'history' (before any events are handled, make sure to be in normal manage)
+            activeBinder: 'normal', // | 'history' (before any events are handled, make sure to be in normal manage)
+            ownerBinder: 'normal' // default binder state, should be normal for new games
         }
         this.state.current.responders[2].push(this)
         this.state.current.on('gameover', this.onGameOver)
@@ -137,7 +160,7 @@ export class SurakartaPixi {
             .addStateBinder('history', HistoryBinder)
 
         if (noFireEvents !== true) { // If true, we don't want to do anything with UI/bridge
-            console.log('onReset(): noFireEvents === true')
+            console.log('onReset(): noFireEvents !== true')
             this.plate.useState(this.state.current)
             window.$bridge.fire('timersync', { player: undefined, value: 60000 * 5 })
             window.$bridge.fire('turn', { player: 'red' })
@@ -180,6 +203,15 @@ export class SurakartaPixi {
      */
     onResign = (event) => {
         this.onGameOverSideEffects()
+
+        if (this.config.bundle) { // are we showing a previous game?
+            window.$bridge.fireAsync('gameover', {
+                reasonType: 'over',
+                reason: ''
+            })
+            return
+        }
+
         const player = event.eventData.player
 
         if (player === 'red') {
@@ -210,11 +242,13 @@ export class SurakartaPixi {
         this.plate.interactiveChildren = false
         window.$bridge.gameRunning = false
 
-        window.submitCompletedGame(// plugin: GameConfig
-            this.config.redPlayer,
-            this.config.blackPlayer,
-            SurakartaBundler.bundle([...this.state.history, this.state.current])
-        )
+        if (!this.config.bundle) {
+            window.submitCompletedGame(// plugin: GameConfig
+                this.config.redPlayer,
+                this.config.blackPlayer,
+                SurakartaBundler.bundle([...this.state.history, this.state.current])
+            )
+        }
     }
 
     /**

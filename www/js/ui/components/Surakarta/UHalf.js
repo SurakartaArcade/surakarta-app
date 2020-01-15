@@ -55,7 +55,7 @@ export class UHalf extends React.Component {
                     <IonHeader style={{ marginBottom: '8px' }}>
                         <IonToolbar>
                             <IonButtons slot="start">
-                                <IonButton color="primary">
+                                <IonButton color="primary" onClick={() => window.navigator.app.exitApp()}>
                                     <IonIcon name="arrow-back" style={{ color: 'black', fontSize: '24px' }} />
                                 </IonButton>
                             </IonButtons>
