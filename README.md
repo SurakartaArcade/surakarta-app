@@ -4,6 +4,13 @@ Surakarta is an open source project whose aim is to bring back life into the tra
 
 > To learn about the actual game, here is a link for you: https://medium.com/@sukantk3.4/surakarta-bddcf11fcf9c
 
+## Preview
+<p>
+  <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
+  <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
+  <img src="https://i.ibb.co/4PR0SN9/Screenshot-1578971224.png" width="256" />
+</p>
+
 ## Structure
 
 The Surakarta game, Firebase communication & matchmaking, and computer moves are (going to or are) implemented in JavaScript.
@@ -83,10 +90,3 @@ Switches to the default state-binder. The default state-binder is normally "norm
 The following state-binders are used in this app:
 
 * `history`: This state is used to go through previous moves in the game. The user cannot input/move in such a state.
-
-## Preview
-<p>
-  <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
-  <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
-  <img src="https://i.ibb.co/4PR0SN9/Screenshot-1578971224.png" width="256" />
-</p>
