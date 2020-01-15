@@ -90,8 +90,15 @@ const Binder = {
 
         this.setState({ timerValue: this.timerValue })
 
-        if (this.timerRunning) {
+        if (this.timerRunning && this.timerValue > 0) {
             this.iterateTimer()
+        } else if (this.timerRunning) {
+            this.timerValue = 0
+            window.$bridge.fire('timerout', {
+                player: this.isInputPlayerUI ? window.$bridge.inputPlayer : window.$bridge.otherPlayer
+            })
+
+            this.stopTimer()
         }
     }
 }

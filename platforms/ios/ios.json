@@ -40,26 +40,18 @@
     "cordova-plugin-webpack": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
-    "com.zexfer.surakarta.plugins.gameconfig": {
-      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
-    },
     "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     },
     "cordova-plugin-ionic-webview": {
       "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
+    },
+    "com.zexfer.surakarta.plugins.gameconfig": {
+      "PACKAGE_NAME": "$(PRODUCT_BUNDLE_IDENTIFIER)"
     }
   },
   "dependent_plugins": {},
   "modules": [
-    {
-      "id": "com.zexfer.surakarta.plugins.gameconfig.GameConfig",
-      "file": "plugins/com.zexfer.surakarta.plugins.gameconfig/www/GameConfig.js",
-      "pluginId": "com.zexfer.surakarta.plugins.gameconfig",
-      "clobbers": [
-        "cordova.plugins.GameConfig"
-      ]
-    },
     {
       "id": "cordova-plugin-screen-orientation.screenorientation",
       "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
@@ -83,13 +75,21 @@
       "clobbers": [
         "cordova.exec"
       ]
+    },
+    {
+      "id": "com.zexfer.surakarta.plugins.gameconfig.GameConfig",
+      "file": "plugins/com.zexfer.surakarta.plugins.gameconfig/www/GameConfig.js",
+      "pluginId": "com.zexfer.surakarta.plugins.gameconfig",
+      "clobbers": [
+        "cordova.plugins.GameConfig"
+      ]
     }
   ],
   "plugin_metadata": {
     "cordova-plugin-whitelist": "1.3.4",
     "cordova-plugin-webpack": "0.4.7",
-    "com.zexfer.surakarta.plugins.gameconfig": "1.0.0",
     "cordova-plugin-screen-orientation": "3.0.2",
-    "cordova-plugin-ionic-webview": "4.1.3"
+    "cordova-plugin-ionic-webview": "4.1.3",
+    "com.zexfer.surakarta.plugins.gameconfig": "1.0.0"
   }
 }

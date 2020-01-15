@@ -165,10 +165,21 @@ export class Plate extends VectorSprite {
         }
 
         this.state = state
+        this.interactiveChildren = true
+        this.dnd.activePebble = null // just-in-case
+        this.indicateRenderOnce()
+    }
+
+    useDisplayOnlyState (state, autoUpdate) {
+        this.useState(state, autoUpdate)
+        this.interactiveChildren = false
     }
 
     onTurn () {
+        const interactiveChildren = this.interactiveChildren
+
         this.useState(this.state, true, true)
+        this.interactiveChildren = interactiveChildren // prevent side-effect!
     }
 
     /**
@@ -226,7 +237,8 @@ export class Plate extends VectorSprite {
     }
 
     onDnDInput (startPosition, endPosition, activePebble) {
-        this.userCallback(startPosition, endPosition, activePebble)
+        // Handle input after DnD-cleanup
+        setTimeout(this.userCallback(startPosition, endPosition, activePebble), 0)
     }
 }
 

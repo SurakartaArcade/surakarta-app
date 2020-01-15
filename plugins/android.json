@@ -16,14 +16,14 @@
     "cordova-plugin-console": {
       "PACKAGE_NAME": "com.zexfer.surakarta"
     },
-    "com.zexfer.surakarta.plugins.gameconfig": {
-      "PACKAGE_NAME": "com.zexfer.surakarta"
-    },
     "cordova-plugin-screen-orientation": {
       "PACKAGE_NAME": "com.zexfer.surakarta"
     },
     "cordova-plugin-ionic-webview": {
       "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+",
+      "PACKAGE_NAME": "com.zexfer.surakarta"
+    },
+    "com.zexfer.surakarta.plugins.gameconfig": {
       "PACKAGE_NAME": "com.zexfer.surakarta"
     }
   },

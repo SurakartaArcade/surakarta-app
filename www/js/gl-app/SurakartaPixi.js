@@ -1,9 +1,12 @@
+import { Bundler as SurakartaBundler } from 'surakarta-store'
 import { DropShadowFilter } from '@pixi/filter-drop-shadow'
+import HistoryBinder from './mixins/HistoryBinder'
 import * as PIXI from 'pixi.js'
 import PixiTween from 'pixi-tween' // eslint-disable-line
 import Plate from './Plate'
 import { PlayerTypes } from './Constants'
 import Settings from './Settings'
+import StateBinder from './mixins/StateBinder'
 import { Surakarta, validateStep, Directions, getLoopRotation } from 'surakarta'
 import VectorSprite from './VectorSprite'
 
@@ -12,7 +15,17 @@ function injectRenderRequired (app, displayObject) {
 }
 
 /**
- * @extends PIXI.Application
+ * <p>
+ * PixiJS application that is custom built, i.e. doesn't extend `PIXI.Application` for
+ * managing the Surakarta canvas.
+ *
+ * <p>
+ * This app uses on-demand rendering - renders are done on each tick iff rendering is
+ * flagged as required. You cause a re-render to occur atleast once by calling
+ * `indicateRenderOnce`. If you need to maintain constant renders, increment the
+ * `renderRequired` property: `++app.renderRequired`. Once your component doesn't need
+ * constant rendering, you should revert back by decrementing it: `-app.renderRequired`.
+ *
  * @implements SurakartaResponder
  */
 export class SurakartaPixi {
@@ -30,15 +43,6 @@ export class SurakartaPixi {
         // Render only if required
         this.renderRequired = 0 // this is a semaphore - increment to turn on rendering
         this.oneTimeRenderRequired = 0 // subtracted from render-required
-
-        // Initialize game state
-        this.state = {
-            current: new Surakarta(),
-            history: [new Surakarta()],
-            player: null // set 'red' in onReady
-        }
-        this.state.current.responders[2].push(this)
-        this.config = {}
 
         this.ticker.add(this.render)
         this.ticker.start()
@@ -68,19 +72,35 @@ export class SurakartaPixi {
     }
 
     onGameConfig = (event) => {
-        this.config.redPlayer = event.redPlayer
-        this.config.blackPlayer = event.blackPlayer
-        this.config.preplaySequence = event.preplaySequence
-        this.config.isLocal = true
-        this.config.debugRenders = false
+        // Initialize game state
+        this.config = {
+            redPlayer: event.redPlayer,
+            blackPlayer: event.blackPlayer,
+            preplaySequence: event.preplaySequence,
+            isLocal: true,
+            debugRenders: false
+        }
+        this.onReset(true)
+
+        this.stage.interactive = true
+        this.stage.on('mousedown', this.normalState)
+        this.stage.on('touchstart', this.normalState)
 
         window.$bridge.inputPlayer = 'black'
+        window.$bridge.headless = false
+
         this.onReady()
     }
 
     onReady = () => {
         if (this.config.isLocal) {
             this.state.player = 'red'
+
+            window.$bridge.gameRunning = true
+
+            window.$bridge.registerListener('timerout', this.onTimerOut)
+            window.$bridge.registerListener('resign', this.onResign)
+            window.$bridge.registerListener('gamestart', this.onReset)
 
             window.$bridge.fire('timersync', { player: undefined, value: 60000 * 5 })
             window.$bridge.fire('turn', { player: 'red' })
@@ -98,10 +118,129 @@ export class SurakartaPixi {
         })
     }
 
-    onTurn = () => {
-        this.state.history.push(this.state.current.clone())
-        this.state.player = this.state.current.turnPlayer === 0 ? 'red' : 'black'
+    /**
+     * @bridge-binder
+     */
+    onReset = (noFireEvents) => {
+        this.state = {
+            current: new Surakarta(),
+            currentCopy: new Surakarta(), // just for initial position in history
+            history: [new Surakarta()],
+            player: null, // set 'red' in onReady
+            activeBinder: 'normal' // | 'history' (before any events are handled, make sure to be in normal manage)
+        }
+        this.state.current.responders[2].push(this)
+        this.state.current.on('gameover', this.onGameOver)
 
+        // State binding is dependent on state object, so mixins must be re-instantiated
+        StateBinder.initBinder(this)
+            .addStateBinder('history', HistoryBinder)
+
+        if (noFireEvents !== true) { // If true, we don't want to do anything with UI/bridge
+            console.log('onReset(): noFireEvents === true')
+            this.plate.useState(this.state.current)
+            window.$bridge.fire('timersync', { player: undefined, value: 60000 * 5 })
+            window.$bridge.fire('turn', { player: 'red' })
+        }
+
+        window.$bridge.gameRunning = true
+        this.indicateRenderOnce()
+    }
+
+    /**
+     * Fires a game-over event asynchronously for the timer-out.
+     * @bridge-binder
+     */
+    onTimerOut = () => {
+        this.onGameOverSideEffects()
+        const player = this.state.current.turnPlayer
+        this.onGameOver()
+
+        if (player === 0) { // red
+            window.$bridge.fireAsync('gameover', {
+                winner: 'red',
+                winnerName: 'Red',
+                isDraw: false,
+                reasonType: 'timerout',
+                reason: 'because of the timer'
+            })
+        } else { // black
+            window.$bridge.fireAsync('gameover', {
+                winner: 'black',
+                winnerName: 'Black',
+                isDraw: false,
+                reasonType: 'timerout',
+                reason: 'because of the timer'
+            })
+        }
+    }
+
+    /**
+     * @bridge-binder
+     */
+    onResign = (event) => {
+        this.onGameOverSideEffects()
+        const player = event.eventData.player
+
+        if (player === 'red') {
+            window.$bridge.fireAsync('gameover', {
+                winner: 'black',
+                winnerName: 'Black',
+                isDraw: false,
+                reasonType: 'resign',
+                reason: 'because of resignation'
+            })
+        } else { // black
+            window.$bridge.fireAsync('gameover', {
+                winner: 'red',
+                winnerName: 'Red',
+                isDraw: false,
+                reasonType: 'timerout',
+                reason: 'because of resignation'
+            })
+        }
+    }
+
+    /**
+     * Side-effects of any game-over.
+     */
+    onGameOverSideEffects () {
+        this.normalState()
+
+        this.plate.interactiveChildren = false
+        window.$bridge.gameRunning = false
+
+        window.submitCompletedGame(// plugin: GameConfig
+            this.config.redPlayer,
+            this.config.blackPlayer,
+            SurakartaBundler.bundle([...this.state.history, this.state.current])
+        )
+    }
+
+    /**
+     * Responds to surakarta's gameover event emittance.
+     * @responder
+     */
+    onGameOver = () => {
+        this.onGameOverSideEffects()
+
+        window.$bridge.fire('gameover', {
+            winner: this.state.current.turnPlayerColor,
+            winnerName: this.state.current.turnPlayerColor === 'red' ? 'Red' : 'Black',
+            isDraw: false,
+            reasonType: 'gamewon',
+            reason: 'by checkmate'
+        })
+    }
+
+    /**
+     * @responder
+     */
+    onTurn = () => {
+        this.state.history.push(this.state.currentCopy) // current-copy is actually old
+        this.state.currentCopy = this.state.current.clone()
+
+        this.state.player = this.state.current.turnPlayer === 0 ? 'red' : 'black'
         console.log('onTurn ' + this.state.player)
         window.$bridge.turnPlayer = this.state.player
         window.$bridge.fire('turn', { player: this.state.player })
@@ -118,7 +257,6 @@ export class SurakartaPixi {
                 return
             }
 
-            this.onTurn()
             this.indicateRenderOnce()
         } else {
             let dir
@@ -141,7 +279,7 @@ export class SurakartaPixi {
             if (animate && moved) {
                 this._animateTraverseSteps(moved, start)
             } else if (!moved) {
-                console.log("didn't mvoe")
+                console.log("Warning: Didn't move.")
                 this._vibratePebble(pebble)
             }
         }
@@ -197,7 +335,7 @@ export class SurakartaPixi {
         finalize = () => {
             this.state.current.step(start[0], start[1], pos[0], pos[1], false, true)
             this.plate.useState(this.state.current, true)
-            this.onTurn()
+
             this.indicateRenderOnce()
         }
 
@@ -227,6 +365,7 @@ export class SurakartaPixi {
             }
         }
 
+        this.plate.interactiveChildren = false
         progress()
     }
 

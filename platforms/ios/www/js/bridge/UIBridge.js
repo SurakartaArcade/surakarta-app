@@ -17,6 +17,16 @@ export class UIBridge {
         this.orientation = 'portrait'
         this.inputPlayer = 'black'
         this.turnPlayer = 'red'
+        this.headless = true
+        this.gameRunning = false
+        this.config = {
+            isLocal: true,
+            debugBridge: true
+        }
+    }
+
+    get otherPlayer () {
+        return this.inputPlayer === 'red' ? 'black' : 'red'
     }
 
     addEventStore (name) {
@@ -46,9 +56,17 @@ export class UIBridge {
     }
 
     fire (event, data) {
+        if (this.config.debugBridge) {
+            console.log(`Fire "${event}" event to ${this.eventStores[event].listeners.length} listener(s)`)
+        }
+
         const store = this.eventStores[event]
         store.eventData = data
 
         store.listeners.forEach(listener => listener(store))
+    }
+
+    fireAsync (event, data) {
+        window.setTimeout(() => { this.fire(event, data) }, 0)
     }
 }

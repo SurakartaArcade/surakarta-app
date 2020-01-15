@@ -33,10 +33,19 @@ export class UHalf extends React.Component {
 
     componentDidMount () {
         this.registerTimerListeners()
+        window.$bridge.registerListener('gameover', this.onGameOver)
     }
 
     componentWillUnmount () {
         this.unregisterTimerListeners()
+        window.$bridge.unregisterListener('gameover', this.onGameOver)
+    }
+
+    /**
+     * @bridge-binder
+     */
+    onGameOver = () => {
+        this.stopTimer()
     }
 
     render () {

@@ -1,5 +1,6 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
     mode: 'development',
@@ -17,9 +18,11 @@ module.exports = {
             {
                 test: /\.(js|jsx|.mjs)$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader'
-                }
+                use: [
+                    'cache-loader',
+                    'thread-loader',
+                    'babel-loader'
+                ]
             },
             {
                 test: /\.svg$/,
@@ -41,6 +44,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
+                    { loader: 'thread-loader' },
                     { loader: 'style-loader' },
                     { loader: 'css-loader' },
                     { loader: 'sass-loader' }
@@ -51,6 +55,7 @@ module.exports = {
     plugins: [
         new BundleAnalyzerPlugin({
             analyzerMode: 'disabled' // static
-        })
+        }),
+        new webpack.ProgressPlugin()
     ]
 }

@@ -18,12 +18,13 @@ import com.zexfer.surakarta.databinding.ActivityMainBinding;
 import com.zexfer.surakarta.dialogs.PlayerSourceDialogFragment;
 import com.zexfer.surakarta.gui.OfflineConfigChooserFragment;
 import com.zexfer.surakarta.gui.OnlineConfigChooserFragment;
+import com.zexfer.surakarta.gui.adapters.HistoryAdapter;
 import com.zexfer.surakarta.plugins.gameconfig.GameConfig;
 import com.zexfer.surakarta.viewmodels.GameConfigViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements View.OnClickListener,
-            PlayerSourceDialogFragment.PlayerSourceListener {
+        PlayerSourceDialogFragment.PlayerSourceListener {
 
     private static final int NUM_CONFIGS = 2;
 
@@ -42,9 +43,21 @@ public class MainActivity extends AppCompatActivity
         mConfigSlideAdapter = new ConfigSlideFragmentAdapter(this);
         mViewBinding.appbar.appbarViewpager.setAdapter(mConfigSlideAdapter);
         mViewBinding.appbar.appbarViewpager.setUserInputEnabled(false);
+        mViewBinding.historyView.setAdapter(new HistoryAdapter(getLayoutInflater()));
         mViewBinding.playButton.setOnClickListener(this);
 
         mGameConfig = ViewModelProviders.of(this).get(GameConfigViewModel.class);
+        mGameConfig.getHistory(getApplicationContext())
+                .observe(this, surakartaTrack -> {
+                    ((HistoryAdapter) mViewBinding.historyView.getAdapter())
+                            .submitList(surakartaTrack);
+
+                    mViewBinding.welcomeContainer.setVisibility(
+                            surakartaTrack.size() == 0 ?
+                                    View.VISIBLE :
+                                    View.GONE
+                    );
+                });
     }
 
     @Override
