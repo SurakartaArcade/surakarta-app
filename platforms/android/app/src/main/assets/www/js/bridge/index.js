@@ -1,7 +1,7 @@
-import { UIBridge } from './UIBridge'
+import { SurakartaBridge } from './SurakartaBridge'
 
-export { UIBridge }
-export default { UIBridge }
+export { SurakartaBridge }
+export default { SurakartaBridge }
 
 /**
  * @typedef {object} BridgeEvent

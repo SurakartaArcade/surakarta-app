@@ -1,3 +1,4 @@
+import { AppConfig } from '../AppConfig'
 import { Bundler as SurakartaBundler } from 'surakarta-store'
 import { DropShadowFilter } from '@pixi/filter-drop-shadow'
 import HistoryBinder from './mixins/HistoryBinder'
@@ -47,6 +48,8 @@ export class SurakartaPixi {
         this.ticker.add(this.render)
         this.ticker.start()
         this.indicateRenderOnce()
+
+        console.log('created')
     }
 
     get width () {
@@ -73,17 +76,11 @@ export class SurakartaPixi {
 
     onGameConfig = (event) => {
         // Initialize game state
-        this.config = {
-            redPlayer: event.redPlayer,
-            blackPlayer: event.blackPlayer,
-            preplaySequence: event.preplaySequence,
-            isLocal: true,
-            debugRenders: false
-        }
+        this.config = new AppConfig(event)
         this.onReset(true)
 
         if (event.bundle) {
-            this.config.bundle = event.bundle
+            this.config.useTrack(event.bundle)
             this.state.ownerBinder = 'history'
 
             const expandedBundle = SurakartaBundler.unbundle(this.config.bundle)
@@ -95,9 +92,6 @@ export class SurakartaPixi {
 
             // override game!
             this.state.history = history
-            // No respondering since it is past game
-
-            this.config.isLocal = false
         }
 
         this.stage.interactive = true
@@ -107,7 +101,12 @@ export class SurakartaPixi {
         window.$bridge.inputPlayer = 'black'
         window.$bridge.headless = false
 
-        this.onReady()
+        if (this.config.isOffline) {
+            this.onReady()
+        } else {
+            window.$componentRegistrar
+                .requireComponent('skFirebase', this.onReady())
+        }
     }
 
     onReady = () => {
@@ -142,7 +141,7 @@ export class SurakartaPixi {
      * @bridge-binder
      */
     onReset = (noFireEvents) => {
-        this.config.bundle = undefined
+        this.config.revokeTrack()
 
         this.state = {
             current: new Surakarta(),

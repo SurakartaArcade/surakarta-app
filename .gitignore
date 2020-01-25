@@ -3,3 +3,4 @@ node_modules
 www/svg
 www/dist-js/*
 www/dist-css/*
+www/firebase.config.js

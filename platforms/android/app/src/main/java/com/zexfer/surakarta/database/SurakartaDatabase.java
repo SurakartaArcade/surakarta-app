@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import com.zexfer.surakarta.database.entities.DateConverter;
 import com.zexfer.surakarta.database.entities.SurakartaTrack;
 
-@Database(entities = {SurakartaTrack.class}, version = 1)
+@Database(entities = {SurakartaTrack.class}, version = 1, exportSchema = false)
 public abstract class SurakartaDatabase extends RoomDatabase {
 
     public abstract TracksDao tracksDao();

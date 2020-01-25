@@ -119,6 +119,7 @@ public class GameConfig extends CordovaPlugin {
                 encodedResult.put("blackPlayer", sBlackPlayer);
                 encodedResult.put("preplaySequence", new JSONArray(sPreplaySequence));
                 encodedResult.put("bundle", sBundle);
+                encodedResult.put("mode", sMode);
 
                 sBundle = null;// auto-delete
 

@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity
                 showPlayerSourceDialog(R.id.black_player_toggle_button);
                 break;
             case R.id.play_button:
+                mGameConfig.commitConfig();
                 Intent playIntent = new Intent(this, SurakartaActivity.class);
                 startActivity(playIntent);
                 break;
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity
         switch(actionStringRes) {
             case R.string.action_review:
                 GameConfig.putBundle(track.encodedBundle);
+                mGameConfig.commitConfig();
                 Intent playIntent = new Intent(this, SurakartaActivity.class);
                 startActivity(playIntent);
                 break;

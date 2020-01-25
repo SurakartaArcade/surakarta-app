@@ -5,6 +5,14 @@ export const PlayerTypes = {
     NOINPUT: 4
 }
 
+export const MODES = {
+    OFFLINE: 10,
+    ONLINE: 11
+}
+
 export default {
-    ...PlayerTypes
+    ...PlayerTypes,
+    PlayerTypes,
+    ...MODES,
+    MODES
 }

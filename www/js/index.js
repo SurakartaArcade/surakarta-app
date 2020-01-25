@@ -1,8 +1,64 @@
+// Enabling logging is first priority!
+const { log, LogLevel } = require('missionlog')
+
+log.init({
+    skPixi: 'INFO',
+    skView: 'INFO',
+    skReact: 'INFO',
+    skFirebase: 'INFO',
+    skBridge: 'INFO',
+    skComponentRegistrar: 'INFO'
+},
+(level, tag, msg, params) => {
+    const prefix = `${level}: [${tag}]`
+    switch (level) {
+    case LogLevel.ERROR:
+        console.error(prefix, msg, ...params)
+        break
+    case LogLevel.WARN:
+        console.warn(prefix, msg, ...params)
+        break
+    case LogLevel.INFO:
+        console.info(prefix, msg, ...params)
+        break
+    }
+});
+
+// fetch for file:// (from https://github.com/github/fetch/pull/92)
+(function () {
+    var nativeFetch = window.fetch
+    if (nativeFetch) {
+        const a = document.createElement('a')
+        window.fetch = function (url) {
+            a.href = url
+            const full_url = a.href // eslint-disable-line
+            if (full_url.indexOf('file:') === 0) {
+                return new Promise(function (resolve, reject) {
+                    var xhr = new XMLHttpRequest()
+                    xhr.onload = function () {
+                        resolve(new Response(xhr.responseText, { status: xhr.status }))
+                    }
+                    xhr.onerror = function (err) {// eslint-disable-line
+                        reject(new TypeError('Local request failed'))
+                    }
+                    xhr.open('GET', url)
+                    xhr.send(null)
+                })
+            } else {
+                return nativeFetch.call(this, Array.prototype.slice.apply(arguments))
+            }
+        }
+    }
+})()
+
 const PIXI = require('pixi.js')
 window.PIXI = PIXI
 const { SurakartaPixi } = require('./gl-app/SurakartaPixi')
-const { UIBridge } = require('./bridge')
+const { SurakartaBridge } = require('./bridge')
 const Portrait = require('./ui/index.portrait.js')
+const ComponentRegistrar = require('./ComponentRegistrar').ComponentRegistrar
+
+window.$componentRegistrar = ComponentRegistrar
 
 function buildBridge () {
     /**
@@ -12,7 +68,7 @@ function buildBridge () {
      * @global window.$bridge
      * @type {UIBridge}
      */
-    window.$bridge = new UIBridge()
+    window.$bridge = new SurakartaBridge()
         /* Fired when it is a player's turn. @see TurnEvent */
         .addEventStore('turn')
         /* Fired when the timers need to be synchronized with a timer value. @see TimerSyncEvent */
