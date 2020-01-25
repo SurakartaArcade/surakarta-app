@@ -4,6 +4,13 @@ Surakarta is an open source project whose aim is to bring back life into the tra
 
 > To learn about the actual game, here is a link for you: https://medium.com/@sukantk3.4/surakarta-bddcf11fcf9c
 
+## Preview
+<p>
+  <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
+  <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
+  <img src="https://i.ibb.co/4PR0SN9/Screenshot-1578971224.png" width="256" />
+</p>
+
 ## Structure
 
 The Surakarta game, Firebase communication & matchmaking, and computer moves are (going to or are) implemented in JavaScript.
@@ -28,9 +35,58 @@ The bridge contains a list of event-stores, or just events, that hold event-asso
 
 > Functions that listen to bridge events are called bridge-binders and are annotated so in documentation. They are different from functions that listen to turns in `Surakarta` (called responders) and functions that listen to events emitted by `Surakarta`.
 
-## Preview
-<p>
-  <img src="https://i.ibb.co/KF6jcP6/Screenshot-1578363934.png" width="256" />
-  <img src="https://i.ibb.co/kBVQ1GZ/Screenshot-1578708270.png" width="256" />
-  <img src="https://i.ibb.co/4PR0SN9/Screenshot-1578971224.png" width="256" />
-</p>
+> Bridge events can be fired by gl-app or the UI.
+
+* `gamestart`: Fired by the UI when user wants to start a new game. This is only fired when `$bridge.gameRunning=false`.
+
+* `gameover`: Fired by gl-app when a game is completed. There are three reasons why a game could end: `gameover`, `over`, `timerout`.
+
+* `turn`: Fired by gl-app when a turn occurs.
+
+* `timersync`: Fired by gl-app to synchronize the timer(s) to a specific value (in milliseconds).
+
+* `timerout`: Fired by the UI when a timer runs out.
+
+* `resign`: Fired by the UI when user resigns.
+
+* `moveback`: Fired by the UI when user wants to view the move before.
+
+* `moveforward`: Fired by the UI when user wants to view move after.
+
+* `init`: Initialization sequence for UI (fired by gl-app).
+
+## State Binders
+
+Surakarta heavily uses mixins for spreading out features in multiple files that belong to one class. `SurakartaPixi`'s state can be managed by one such mixin, or "state-binder", at a time. By default, it is managed by the "normal" state.
+
+### StateBinder
+
+This mixin on `SurakartPixi` handles switching between state-binders. It provides the following methods:
+
+* `addStateBinder`
+
+```js
+addStateBinder(name: string, binder: object): SurakartaPixi
+```
+
+This method initializes the given state-binder, which lives in `this.state.${name}Binder`.
+
+* `useState`
+
+```js
+useState(name: string, ...params: Array<object>)
+```
+
+Switch to the given state-binder, e.g. to switch to the history-binder: `useState('history')`.
+
+* `normalState`
+
+```js
+normalState()
+```
+
+Switches to the default state-binder. The default state-binder is normally "normal"; however, this behaviour can be overriden by setting `this.state.ownerBinder`.
+
+The following state-binders are used in this app:
+
+* `history`: This state is used to go through previous moves in the game. The user cannot input/move in such a state.
