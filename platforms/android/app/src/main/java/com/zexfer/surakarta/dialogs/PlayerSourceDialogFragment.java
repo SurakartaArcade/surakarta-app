@@ -11,8 +11,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.fragment.app.DialogFragment;
 
-import com.zexfer.surakarta.PlayerSource;
 import com.zexfer.surakarta.R;
+import com.zexfer.surakarta.plugins.gameconfig.GameConfig;
 
 /**
  * Fragment that is used to pick the player source before starting
@@ -35,13 +35,13 @@ public class PlayerSourceDialogFragment extends DialogFragment {
 
         if (this.getArguments() != null) {
             mPlayerId = this.getArguments().getInt(ARG_PLAYER_ID, 0);
-            mChosenSource = this.getArguments().getInt(ARG_PLAYER_DEFAULT, PlayerSource.LOCAL);
+            mChosenSource = this.getArguments().getInt(ARG_PLAYER_DEFAULT, GameConfig.PLAYER_LOCAL);
 
             switch (mChosenSource) {
-                case PlayerSource.LOCAL:
+                case GameConfig.PLAYER_LOCAL:
                     mChosenSourceViewId = R.id.entry_local;
                     break;
-                case PlayerSource.COMPUTER:
+                case GameConfig.PLAYER_COMPUTER:
                     mChosenSourceViewId = R.id.entry_computer;
                     break;
             }
@@ -61,10 +61,10 @@ public class PlayerSourceDialogFragment extends DialogFragment {
 
             switch (v.getId()) {
                 case R.id.entry_local:
-                    mChosenSource = PlayerSource.LOCAL;
+                    mChosenSource = GameConfig.PLAYER_LOCAL;
                     break;
                 case R.id.entry_computer:
-                    mChosenSource = PlayerSource.COMPUTER;
+                    mChosenSource = GameConfig.PLAYER_COMPUTER;
                     break;
             }
 

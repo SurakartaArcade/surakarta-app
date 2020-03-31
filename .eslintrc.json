@@ -5,7 +5,9 @@
     },
     "extends": [
         "standard",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:import/recommended",
+        "plugin:jsdoc/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -15,8 +17,5 @@
     "parserOptions": {
         "ecmaVersion": 2018,
         "sourceType": "module"
-    },
-    "rules": {
-        "indent": ["error", 4]
     }
 }

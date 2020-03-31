@@ -3,10 +3,8 @@ package com.zexfer.surakarta.viewmodels;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.zexfer.surakarta.PlayerSource;
 import com.zexfer.surakarta.database.SurakartaDatabase;
 import com.zexfer.surakarta.database.entities.SurakartaTrack;
 import com.zexfer.surakarta.plugins.gameconfig.GameConfig;
@@ -15,10 +13,10 @@ import java.util.List;
 
 public class GameConfigViewModel extends ViewModel {
 
-    private int mTargetPlayerSource = PlayerSource.LOCAL;
+    private int mTargetPlayerSource = GameConfig.PLAYER_LOCAL;
 
-    private int mRedPlayerSource = PlayerSource.LOCAL;
-    private int mBlackPlayerSource = PlayerSource.LOCAL;
+    private int mRedPlayerSource = GameConfig.PLAYER_LOCAL;
+    private int mBlackPlayerSource = GameConfig.PLAYER_LOCAL;
     private int mMode = GameConfig.MODE_OFFLINE;
 
     private LiveData<List<SurakartaTrack>> mHistory;
@@ -66,8 +64,8 @@ public class GameConfigViewModel extends ViewModel {
     }
 
     public void commitConfig() {
-        GameConfig.setRedPlayer(mTargetPlayerSource);
-        GameConfig.setBlackPlayer(PlayerSource.LOCAL);
+        GameConfig.setRedPlayer(mRedPlayerSource);
+        GameConfig.setBlackPlayer(mBlackPlayerSource);
         GameConfig.setMode(mMode);
     }
 }

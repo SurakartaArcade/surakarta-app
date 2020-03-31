@@ -36,9 +36,6 @@ public class SurakartaActivity extends CordovaActivity {
             moveTaskToBack(true);
         }
 
-        GameConfig.setRedPlayer(GameConfig.PLAYER_LOCAL);
-        GameConfig.setBlackPlayer(GameConfig.PLAYER_LOCAL);
-
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }

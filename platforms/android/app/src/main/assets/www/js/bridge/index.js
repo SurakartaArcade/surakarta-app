@@ -12,20 +12,24 @@ export default { SurakartaBridge }
 
 /**
  * TimerSyncEvent
- * @extends BridgeEvent
+ *
+ * @augments BridgeEvent
  * @property {string} eventData.player
  * @property {number} eventData.value
  */
 
 /**
  * TurnEvent
- * @extends BridgeEvent
- * @property {string} eventData.player
+ *
+ * @augments BridgeEvent
+ * @property {object} eventData -
+ * @property {string} eventData.player -
  */
 
 /**
  * TimerOutEvent
- * @extends BridgeEvent
+ *
+ * @augments BridgeEvent
  * @property {'red', 'player'} eventData.player
  */
 
@@ -35,7 +39,8 @@ export default { SurakartaBridge }
 
 /**
  * GameOverEvent
- * @extends BridgeEvent
+ *
+ * @augments BridgeEvent
  * @property {string} eventData.winner
  * @property {string} eventData.winnerName
  * @property {boolean} eventData.isDraw

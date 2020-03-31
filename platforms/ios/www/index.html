@@ -18,8 +18,9 @@
     under the License.
 -->
 <html>
-    <head>
-        <!--
+
+<head>
+    <!--
         Customize this policy to fit your own app's needs. For more guidance, see:
             https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
         Some notes:
@@ -28,34 +29,36 @@
             * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
-        <meta http-equiv="Content-Security-Policy" content="
+    <meta http-equiv="Content-Security-Policy" content="
             default-src * 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval';
             connect-src * surakarta-app.firebaseapp.com googleapis.com apis.google.com;
             style-src 'self' 'unsafe-inline';
             media-src *;
             img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
 
-        <!-- Only portrait mode is supported right now, so... -->
-        <link rel="stylesheet" type="text/css" href="css/index.portrait.css">
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div id="app">
-            <div id="view-landscape-left">
-                <div id="view-top"></div>
-                <!-- view-target makes room for itself! -->
-                <canvas id="view-target"></canvas>
-                <div id="view-bottom"></div>
-            </div>
-            <div id="view-landscape-right">
-            </div>
+    <!-- Only portrait mode is supported right now, so... -->
+    <link rel="stylesheet" type="text/css" href="css/index.portrait.css">
+    <title>Hello World</title>
+</head>
+
+<body>
+    <div id="app">
+        <div id="view-landscape-left">
+            <div id="view-top"></div>
+            <!-- view-target makes room for itself! -->
+            <canvas id="view-target"></canvas>
+            <div id="view-bottom"></div>
         </div>
+        <div id="view-landscape-right">
+        </div>
+    </div>
 
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="dist-js/index.bundle.js"></script>
-    </body>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="dist-js/index.bundle.js"></script>
+</body>
+
 </html>
