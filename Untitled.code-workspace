@@ -1,0 +1,32 @@
+{
+	"folders": [
+		{
+			"name": "Surakarta",
+			"path": "."
+		},
+		{
+			"name": "surakarta-ai",
+			"path": "/Users/shukantpal/Web Projects/surakarta-ai"
+		},
+		{
+			"name": "surakarta-analysis",
+			"path": "/Users/shukantpal/Web Projects/surakarta-analysis"
+		},
+		{
+			"name": "surakarta-cloud-functions",
+			"path": "/Users/shukantpal/Web Projects/surakarta-cloud-functions"
+		},
+		{
+			"name": "surakarta-store",
+			"path": "/Users/shukantpal/Web Projects/surakarta-store"
+		},
+		{
+			"path": "/Users/shukantpal/Web Projects/surakarta"
+		}
+	],
+	"settings": {
+		"editor.formatOnSave": true,
+		"javascript.format.enable": false,
+		"eslint.alwaysShowStatus": true
+	}
+}
