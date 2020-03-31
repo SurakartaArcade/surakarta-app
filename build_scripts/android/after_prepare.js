@@ -4,22 +4,18 @@ const fs = require('fs')
 const MANIFEST_FILE = '/Users/shukantpal/CordovaProjects/Surakarta/platforms/android/app/src/main/AndroidManifest.xml'
 
 /**
- * Remove main action intent from `SurkartaActivity`.
- *
- * @param {ElementTree} manifestTree
+ * after_prepare removes the first intent action (added by before_prepare - MAIN)
  */
-function stripMainAction (manifestTree) {
-    const intentFilterElement = manifestTree.find("./application/activity[@android:name='.SurakartaActivity']")
-        .getchildren()[0]
-    intentFilterElement.remove(intentFilterElement.getchildren()[1])
+function main () {
+  const manifestTree = et.parse(fs.readFileSync(MANIFEST_FILE, 'utf8'))
+  const surakartaActivityElement = manifestTree.find("./application/activity[@android:name='.SurakartaActivity']")
+
+  // Remove first intent-filter (added by before_prepare having MAIN/LAUNCHER)
+  surakartaActivityElement.remove(surakartaActivityElement.getchildren()[0])
+
+  fs.writeFileSync(MANIFEST_FILE, manifestTree.write())
 }
 
-function hey () {
-    const manifestTree = et.parse(fs.readFileSync(MANIFEST_FILE, 'utf8'))
-    stripMainAction(manifestTree)
-    fs.writeFileSync(MANIFEST_FILE, manifestTree.write())
-}
+module.exports = main
 
-module.exports = hey
-
-hey()
+main() // we're running this from "npm run prepare" so.

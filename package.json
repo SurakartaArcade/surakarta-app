@@ -2,11 +2,11 @@
   "name": "com.zexfer.surakarta",
   "displayName": "Surakarta",
   "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
+  "description": "Surakarta app.",
   "main": "index.js",
   "scripts": {
-    "prepare": "cordova prepare; node ./build_scripts/android/after_prepare.js",
-    "build": "rm -rf ./www/dist-js/*; webpack; cp ./node_modules/surakarta-ai/bundles/ZygoteThread.worker.js ./www/dist-js/; npm run prepare;",
+    "prepare": "cordova prepare --verbose; node ./build_scripts/android/after_prepare.js",
+    "build": "rm -rf ./www/dist-js/*; webpack; npm run prepare;",
     "build-verbose": "webpack --verbose; cordova prepare;",
     "test": "echo \"Error: no test specified\" && exit 1",
     "link-local-deps": "npm link surakarta surakarta-analysis surakarta-ai"
@@ -14,7 +14,6 @@
   "keywords": [
     "ecosystem:cordova"
   ],
-  "private": "true",
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
