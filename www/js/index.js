@@ -26,6 +26,8 @@ log.init({
 
 // fetch for file:// (from https://github.com/github/fetch/pull/92)
 (function () {
+  console.log('heres')
+
   var nativeFetch = window.fetch
   if (nativeFetch) {
     const a = document.createElement('a')

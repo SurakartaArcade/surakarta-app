@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import { firebaseConfig } from './firebase.config.js' // git-ignored
 import { log, tag } from 'missionlog'
 
+import { setLogLevel } from '@firebase/logger'
 import 'firebase/auth'
 import 'firebase/analytics'
 
@@ -9,9 +10,10 @@ firebase.initializeApp(firebaseConfig)
 
 export class SurakartaFirebase {
   constructor () {
+    setLogLevel('DEBUG')
     this.authProvider = new firebase.auth.GoogleAuthProvider()
 
-    firebase.auth().onAuthStateChanged(this.onAuthStateChanged)
+    setTimeout(this.onAuthStateChanged, 0)
     log.info(tag.skFirebase, 'SurakartaFirebase initialized')
   }
 
